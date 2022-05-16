@@ -69,6 +69,25 @@ AMenuSystemCharacter::AMenuSystemCharacter():
 				FString::Printf(TEXT("Found subsystem %s"), *OnlineSubsystem->GetSubsystemName().ToString()
 				)
 			);
+
+			if (OnlineSessionInterface.IsValid())
+			{
+				GEngine->AddOnScreenDebugMessage(
+					-1,
+					15.f,
+					FColor::Blue,
+					FString(TEXT("OnlineSessionInterface valid"))
+				);
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(
+					-1,
+					15.f,
+					FColor::Red,
+					FString(TEXT("OnlineSessionInterface invalid"))
+				);
+			}
 		}
 	}
 }
@@ -149,8 +168,18 @@ void AMenuSystemCharacter::CreateGameSession()
 
 void AMenuSystemCharacter::JoinGameSession()
 {
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.f,
+			FColor::Blue,
+			FString(TEXT("JoinGameSession"))
+		);
+	}
+
 	// Find game sessions
-	if (OnlineSessionInterface.IsValid())
+	if (!OnlineSessionInterface.IsValid())
 	{
 		if (GEngine)
 		{
