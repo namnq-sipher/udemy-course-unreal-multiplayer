@@ -150,7 +150,19 @@ void AMenuSystemCharacter::CreateGameSession()
 void AMenuSystemCharacter::JoinGameSession()
 {
 	// Find game sessions
-	if (OnlineSessionInterface.IsValid()) return;
+	if (OnlineSessionInterface.IsValid())
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(
+				-1,
+				15.f,
+				FColor::Blue,
+				FString(TEXT("OnlineSessionInterface invalid"))
+			);
+		}
+		return;
+	}
 
 	OnlineSessionInterface->AddOnFindSessionsCompleteDelegate_Handle(FindSessionsCompleteDelegate);
 
@@ -160,6 +172,15 @@ void AMenuSystemCharacter::JoinGameSession()
 	SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 	
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			15.f,
+			FColor::Blue,
+			FString(TEXT("OnlineSessionInterface->FindSessions"))
+		);
+	}
 	OnlineSessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId(), SessionSearch.ToSharedRef());
 }
 
