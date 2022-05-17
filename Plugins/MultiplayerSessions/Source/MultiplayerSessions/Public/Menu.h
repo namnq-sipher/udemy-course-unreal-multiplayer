@@ -33,14 +33,14 @@ protected:
 	void OnDestroySession(bool bWasSuccessful);
 	UFUNCTION()
 	void OnStartSession(bool bWasSuccessful);
-	
-private:
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* HostButton;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* JoinButton;
+	
+private:
 
 	UFUNCTION()
 	void HostButtonClicked();
